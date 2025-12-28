@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Clock, Car, MapPin, Bell, Sparkles, X, Activity, AlertCircle, Send, MessageSquareText, Heart } from 'lucide-react';
-import { MOCK_SPOTS, CATEGORIES } from '../constants';
-import { ParkingSpot, ParkingStatus, ScreenState } from '../types';
+import { MOCK_SPOTS, CATEGORIES } from '../constants.ts';
+import { ParkingSpot, ParkingStatus, ScreenState } from '../types.ts';
 
 interface HomeScreenProps {
     setScreen: (screen: ScreenState) => void;
@@ -35,7 +35,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ setScreen }) => {
         setIsAsking(false);
         setAiThinking(true);
         
-        // المنطق المطلوب: رد نصي وتوجيه تلقائي
         let targetText = "سيتم توجيهك لأقرب موقف للمول";
         let targetId = "1"; 
 
@@ -57,7 +56,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ setScreen }) => {
             setSelectedSpot(spot);
             setAiThinking(false);
             setUserInput("");
-        }, 2000); // زيادة مدة التفكير قليلاً لإضفاء واقعية
+        }, 2000); 
     };
 
     const filteredSpots = MOCK_SPOTS.filter(s => {
@@ -70,7 +69,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ setScreen }) => {
     });
 
     return (
-        <div className="relative h-full w-full flex flex-col bg-white overflow-hidden">
+        <div className="relative h-full w-full flex flex-col bg-white overflow-hidden animate-fade-in">
             {/* Header */}
             <div className="absolute top-0 left-0 right-0 z-30 pt-12 glass-light border-b border-slate-100 shadow-sm">
                 <div className="px-6 pb-4 flex items-center justify-between">
@@ -87,7 +86,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ setScreen }) => {
                                 <span className="text-[10px] font-black uppercase tracking-widest">زحام</span>
                             </div>
                         )}
-                        <button onClick={() => setScreen(ScreenState.NOTIFICATIONS)} className="p-2.5 rounded-xl border bg-slate-50 border-slate-100 text-slate-400 relative">
+                        <button onClick={() => setScreen(ScreenState.NOTIFICATIONS)} className="p-2.5 rounded-xl border bg-slate-50 border-slate-100 text-slate-400 relative active:scale-90 transition-transform">
                             <Bell size={18} />
                             <div className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border-2 border-white"></div>
                         </button>
@@ -96,7 +95,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ setScreen }) => {
 
                 <div className="px-6 pb-4 flex gap-3 overflow-x-auto no-scrollbar">
                     {CATEGORIES.map(cat => (
-                        <button key={cat.id} onClick={() => setFilterCategory(cat.id)} className={`flex-shrink-0 px-5 py-2.5 rounded-xl text-xs font-black transition-all border ${filterCategory === cat.id ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-100' : 'bg-white border-slate-100 text-slate-400 hover:bg-slate-50'}`}>{cat.label}</button>
+                        <button key={cat.id} onClick={() => setFilterCategory(cat.id)} className={`flex-shrink-0 px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${filterCategory === cat.id ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-100' : 'bg-white border-slate-100 text-slate-400 hover:bg-slate-50'}`}>{cat.label}</button>
                     ))}
                 </div>
             </div>
@@ -106,15 +105,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ setScreen }) => {
                 <div className="absolute top-[15%] right-[5%] w-72 h-72 bg-indigo-500/10 rounded-full blur-[90px] pointer-events-none"></div>
                 <div className="absolute bottom-[30%] left-[20%] w-60 h-60 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
-                {/* IOT Logs */}
-                <div className="absolute top-48 left-6 z-20 w-36 opacity-30 pointer-events-none">
-                    <div className="bg-slate-900/90 backdrop-blur-md p-3 rounded-2xl border border-white/10 shadow-2xl">
-                        {sensorLogs.map((log, i) => <p key={i} className="text-[7px] font-mono text-emerald-400 overflow-hidden leading-relaxed">{`> ${log}`}</p>)}
-                    </div>
-                </div>
-
                 {filteredSpots.map(spot => (
-                    <button key={spot.id} onClick={() => setSelectedSpot(spot)} style={{ left: `${spot.x}%`, top: `${spot.y}%` }} className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-700 ${selectedSpot?.id === spot.id ? 'scale-125 z-20' : 'z-10 hover:scale-110'}`}>
+                    <button key={spot.id} onClick={() => setSelectedSpot(spot)} style={{ left: `${spot.x}%`, top: `${spot.y}%` }} className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-700 ${selectedSpot?.id === spot.id ? 'scale-125 z-20' : 'z-10 hover:scale-110 active:scale-95'}`}>
                         <div className="absolute -top-11 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm shadow-md border border-slate-100 px-2 py-1 rounded-lg text-[10px] font-black text-slate-900 whitespace-nowrap flex flex-col items-center">
                             <span>{spot.price}</span>
                             <div className="w-1.5 h-1.5 bg-white border-r border-b border-slate-100 rotate-45 -mb-1.5 mt-0.5"></div>
@@ -131,7 +123,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ setScreen }) => {
                     </button>
                 ))}
 
-                {/* AI Overlay (Thinking Mode) */}
+                {/* AI Overlay */}
                 {aiThinking && (
                     <div className="absolute inset-0 z-40 bg-white/95 backdrop-blur-3xl flex flex-col items-center justify-center p-10 animate-fade-in text-center">
                         <div className="w-24 h-24 bg-indigo-50 rounded-[2.5rem] flex items-center justify-center border border-indigo-100 animate-bounce-slow mb-8">
@@ -160,7 +152,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ setScreen }) => {
                                     </div>
                                     <span className="font-black text-2xl text-slate-900 tracking-tighter italic">اكتبي طلبك للمساعد الذكي</span>
                                 </div>
-                                <button onClick={() => setIsAsking(false)} className="p-3 bg-slate-50 rounded-2xl text-slate-400 hover:text-slate-600 transition-colors"><X size={24} /></button>
+                                <button onClick={() => setIsAsking(false)} className="p-3 bg-slate-50 rounded-2xl text-slate-400 hover:text-slate-600 transition-colors active:scale-90"><X size={24} /></button>
                             </div>
                             <form onSubmit={handleAIVoiceRequest} className="relative">
                                 <input 
@@ -180,7 +172,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ setScreen }) => {
                     </div>
                 )}
 
-                {/* Bottom Main Button */}
                 {!selectedSpot && !aiThinking && !isAsking && (
                     <div className="absolute bottom-32 left-0 right-0 flex flex-col items-center gap-3 z-20 px-6">
                         <button onClick={() => setIsAsking(true)} className="w-full max-w-sm bg-indigo-600 text-white px-8 py-6 rounded-3xl font-black text-xl flex items-center justify-center gap-4 shadow-[0_30px_60px_rgba(79,70,229,0.4)] hover:scale-105 active:scale-95 transition-all border-b-8 border-indigo-800 relative overflow-hidden group">
@@ -207,7 +198,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ setScreen }) => {
                                 <span className="flex items-center gap-2"><Clock size={20} className="text-indigo-600" /> {selectedSpot.time}</span>
                             </div>
                         </div>
-                        <button onClick={() => setSelectedSpot(null)} className="p-4 bg-slate-50 rounded-3xl text-slate-400 hover:text-slate-600 transition-colors"><X size={28} /></button>
+                        <button onClick={() => setSelectedSpot(null)} className="p-4 bg-slate-50 rounded-3xl text-slate-400 hover:text-slate-600 transition-colors active:scale-90"><X size={28} /></button>
                     </div>
 
                     <div className="grid grid-cols-3 gap-5 mb-10">
