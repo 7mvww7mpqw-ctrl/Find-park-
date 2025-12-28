@@ -3,7 +3,9 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>FindPark - فايند بارك</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,30 +14,37 @@
         font-family: 'Cairo', sans-serif;
         background-color: #f8fafc;
         overflow: hidden;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
       }
       .no-scrollbar::-webkit-scrollbar { display: none; }
       .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       
       .glass-light {
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
         border: 1px solid rgba(255, 255, 255, 0.3);
       }
 
       @keyframes pulse-gentle {
         0%, 100% { transform: scale(1); opacity: 0.5; }
-        50% { transform: scale(1.1); opacity: 0.8; }
+        50% { transform: scale(1.05); opacity: 0.8; }
       }
       .animate-pulse-gentle { animation: pulse-gentle 3s infinite ease-in-out; }
 
       .map-grid {
-        background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+        background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
         background-size: 30px 30px;
       }
       
       .card-shadow {
-        box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 25px 60px -15px rgba(79, 70, 229, 0.12);
+      }
+
+      /* تحسين استجابة الأزرار */
+      button:active {
+        transform: scale(0.96);
       }
     </style>
   <script type="importmap">
