@@ -1,6 +1,7 @@
+
 import React from 'react';
-import { Map, Heart, User, Settings, Search } from 'lucide-react';
-import { ScreenState } from '../types';
+import { Map, Heart, User, Settings } from 'lucide-react';
+import { ScreenState } from '../types.ts';
 
 interface BottomNavProps {
     currentScreen: ScreenState;
